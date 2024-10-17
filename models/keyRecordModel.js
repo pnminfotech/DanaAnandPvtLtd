@@ -7,6 +7,6 @@ const keyRecordSchema = new mongoose.Schema({
   keyQuantity: { type: Number, required: true },
   inTime: { type: String, required: true },
   outTime: { type: String, required: true }
-});
+},{ timestamps: true });
 
 module.exports = mongoose.model('KeyRecord', keyRecordSchema);

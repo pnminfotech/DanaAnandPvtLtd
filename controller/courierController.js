@@ -1,5 +1,8 @@
 // controllers/courierController.js
 const Courier = require('../models/courierModel');
+const InwardCourier = require('../models/inwardCourierModel');
+const OutwardCourier = require('../models/outwardCourierModel');
+
 
 // Submit a new courier
 exports.submitCourier = async (req, res) => {
@@ -10,17 +13,34 @@ exports.submitCourier = async (req, res) => {
             return res.status(400).json({ message: 'All fields are required' });
         }
 
-        const newCourier = new Courier({
-            serialNo,
-            date,
-            formType,
-            name,
-            qty,
-            desc,
-            from,
-            to,
-            receivedBy
-        });
+        let newCourier;
+
+        // Based on the form type, store the data in the respective collection
+        if (formType === 'inward') {
+            newCourier = new InwardCourier({
+                serialNo,
+                date,
+                name,
+                qty,
+                desc,
+                from,
+                to,
+                receivedBy
+            });
+        } else if (formType === 'outward') {
+            newCourier = new OutwardCourier({
+                serialNo,
+                date,
+                name,
+                qty,
+                desc,
+                from,
+                to,
+                receivedBy
+            });
+        } else {
+            return res.status(400).json({ message: 'Invalid form type' });
+        }
 
         await newCourier.save();
         return res.status(201).json({ message: 'Courier submitted successfully', courier: newCourier });
