@@ -2,8 +2,22 @@ const Visitor = require('../models/Visitor');
 
 // Create a new visitor
 exports.createVisitor = async (req, res) => {
+    const {companyName,mobileNo, visitToPerson, reason, inTime, outTime ,remarks} = req.body;
+    if (!companyName || !mobileNo || !visitToPerson || !inTime || !outTime) {
+        return res.status(400).json({ error: 'All fields are required' });
+    }
     try {
-        const visitor = new Visitor(req.body);
+        const visitor = new Visitor({
+            companyName,
+            mobileNo,
+            visitToPerson,
+            reason,
+            inTime,
+            outTime,
+            remarks         
+        });
+
+
         await visitor.save();
         res.status(201).json({ message: 'Visitor created successfully', visitor });
     } catch (error) {

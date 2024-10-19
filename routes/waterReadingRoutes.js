@@ -1,11 +1,13 @@
 const express = require('express');
 const router = express.Router();
-const {submitWater , getAllWater} = require('../controller/waterController')
+const {submitWater , getAllWater, updateWaterReading, deleteWaterReading} = require('../controller/waterController')
 
-// POST request to add water reading
 router.post('/submit', submitWater);
 
-// GET request to fetch all water readings
 router.get('/all', getAllWater);
+
+router.put('/update/:id', updateWaterReading);
+
+router.delete('/delete/:id', deleteWaterReading);
 
 module.exports = router;

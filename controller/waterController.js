@@ -3,13 +3,20 @@ const WaterReading = require("../models/waterReadingModel")
 // POST request to add water reading
 exports.submitWater = async (req, res) => {
   try {
-    const { serialNo, date, startReading, endReading, total, name, waterType } = req.body;
+    const { serialNo, date, startReading, endReading,  name, waterType } = req.body;
 
     // Validation
-    if (!serialNo || !date || !startReading || !endReading || !total || !name) {
+    if (!serialNo || !date || !startReading || !endReading  || !name || !waterType) {
       return res.status(400).json({ error: 'All fields are required' });
     }
 
+    if (endReading <= startReading) {
+      return res.status(400).json({ error: 'End reading must be greater than start reading' });
+    }
+
+    const total = endReading - startReading;
+
+  
     const newWaterReading = new WaterReading({ serialNo, date, startReading, endReading, total, name ,waterType });
     await newWaterReading.save();
     res.status(201).json({ message: 'Water reading added successfully', newWaterReading });
@@ -28,4 +35,43 @@ exports.getAllWater = async (req, res) => {
   }
 };
 
+exports.updateWaterReading = async (req, res) => {
+  const { id } = req.params;
+  const { startReading, endReading, waterType, name } = req.body;
 
+  try {
+    const updatedRecord = await WaterReading.findByIdAndUpdate(id, {
+      startReading,
+      endReading,
+      waterType,
+      name,
+      total: endReading - startReading, // Calculate total on update
+    }, { new: true });
+
+    if (!updatedRecord) {
+      return res.status(404).json({ error: 'Record not found' });
+    }
+
+    res.status(200).json(updatedRecord);
+  } catch (error) {
+    console.error('Error updating water record:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
+
+
+
+exports.deleteWaterReading = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const deletedReading = await WaterReading.findByIdAndDelete(id);
+
+    if (!deletedReading) {
+      return res.status(404).json({ error: 'Water reading not found' });
+    }
+
+    res.status(200).json({ message: 'Water reading deleted successfully', deletedReading });
+  } catch (error) {
+    res.status(500).json({ error: 'Error deleting water reading', details: error.message });
+  }
+};

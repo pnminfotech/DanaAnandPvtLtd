@@ -28,7 +28,7 @@ const visitorSchema = new mongoose.Schema({
     remarks: {
         type: String
     },
-}, { timestamps: true });
+});
 
 
 module.exports = mongoose.model('Visitor', visitorSchema);
