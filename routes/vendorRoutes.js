@@ -14,7 +14,7 @@ router.get('/:id', getVendorById);
 
 router.put('/update/:id', updateVendor); // Update route
 router.delete('/delete/:id', deleteVendor); // Delete route
-router.delete('/export/:id', downloadReport);
+router.delete('/export', downloadReport);
 
 
 module.exports = router;

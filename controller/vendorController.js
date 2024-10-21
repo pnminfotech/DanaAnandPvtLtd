@@ -1,6 +1,7 @@
 const Vendor = require('../models/vendorModel');
-const express = require('express');
-
+const path = require('path');
+const fs = require('fs');
+const XLSX = require('xlsx');
 
 
 // Create a new vendor entry
@@ -109,11 +110,6 @@ const downloadReport = async (req, res) => {
         res.status(500).json({ error: 'Internal server error' });
     }
 };
-
-
-
-
-
 
 module.exports = {
     createVendor,
