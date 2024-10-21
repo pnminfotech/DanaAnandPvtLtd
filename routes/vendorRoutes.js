@@ -1,5 +1,5 @@
 const express = require('express');
-const { createVendor, getVendors, getVendorById } = require('../controller/vendorController');
+const { createVendor, getVendors, getVendorById, updateVendor, deleteVendor ,downloadReport} = require('../controller/vendorController');
 
 const router = express.Router();
 
@@ -11,5 +11,10 @@ router.get('/all', getVendors);
 
 // Route to get a single vendor by id
 router.get('/:id', getVendorById);
+
+router.put('/update/:id', updateVendor); // Update route
+router.delete('/delete/:id', deleteVendor); // Delete route
+router.delete('/export/:id', downloadReport);
+
 
 module.exports = router;

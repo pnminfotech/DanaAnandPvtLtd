@@ -1,4 +1,4 @@
-const WaterReading = require("../models/waterReadingModel")
+ const WaterReading = require("../models/waterReadingModel")
 
 // POST request to add water reading
 exports.submitWater = async (req, res) => {
@@ -75,3 +75,26 @@ exports.deleteWaterReading = async (req, res) => {
     res.status(500).json({ error: 'Error deleting water reading', details: error.message });
   }
 };
+
+exports.downloadExport = async(req,res) =>{
+  
+    try {
+      const records = await WaterReading.find().sort({ date: -1 });
+  
+      // Transform data to include a serial number
+      const waterData = records.map((record, index) => ({
+        serialNo: index + 1,
+        date: record.date,
+        startReading: record.startReading,
+        endReading: record.endReading,
+        total: record.endReading - record.startReading,
+        name: record.name,
+        waterType: record.waterType,
+      }));
+  
+      res.status(200).json(waterData);
+    } catch (error) {
+      console.error('Error fetching water records:', error);
+      res.status(500).json({ error: 'Internal server error' });
+    }
+}
