@@ -95,8 +95,9 @@ const downloadReport = async (req, res) => {
         // Fetch the vendors from the controller
         const vendors = await getVendors();
 
-        // Prepare the vendor data for the Excel sheet
-        const filteredVendors = vendors.map(vendor => ({
+        // Transform vendor data to include serial numbers
+        const vendorData = vendors.map((vendor, index) => ({
+            serialNo: index + 1,
             date: vendor.date,
             contractorName: vendor.contractorName,
             contractDetails: vendor.contractDetails,
@@ -105,31 +106,14 @@ const downloadReport = async (req, res) => {
             remarks: vendor.remarks
         }));
 
-        // Create a new workbook and a worksheet with vendor data
-        const worksheet = XLSX.utils.json_to_sheet(filteredVendors);
-        const workbook = XLSX.utils.book_new();
-        XLSX.utils.book_append_sheet(workbook, worksheet, "Vendors");
-
-        // Write the workbook to a file
-        const filePath = path.join(__dirname, '..', 'downloads', 'vendors.xlsx');
-        XLSX.writeFile(workbook, filePath);
-
-        // Send the file to the client for download
-        res.download(filePath, 'vendors.xlsx', (err) => {
-            if (err) {
-                console.error('Error sending file:', err);
-                res.status(500).send('Error downloading file');
-            } else {
-                // Optionally, remove the file after sending
-                fs.unlinkSync(filePath);
-            }
-        });
-
+        // Return the transformed vendor data as a JSON response
+        res.status(200).json(vendorData);
     } catch (error) {
-        console.error('Error generating vendor Excel file:', error);
-        res.status(500).send('Failed to generate Excel file');
+        console.error('Error fetching vendor records:', error);
+        res.status(500).json({ error: 'Internal server error' });
     }
 };
+
 
 module.exports = router;
 
