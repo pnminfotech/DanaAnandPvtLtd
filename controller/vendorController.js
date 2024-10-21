@@ -1,11 +1,7 @@
 const Vendor = require('../models/vendorModel');
-
 const express = require('express');
-const router = express.Router();
-const XLSX = require('xlsx');
-const fs = require('fs');
-const path = require('path');
-const { getVendors } = require('../controller/vendorController'); // Assuming getVendors fetches all vendors
+
+
 
 // Create a new vendor entry
 const createVendor = async (req, res) => {
@@ -115,7 +111,7 @@ const downloadReport = async (req, res) => {
 };
 
 
-module.exports = router;
+
 
 
 
