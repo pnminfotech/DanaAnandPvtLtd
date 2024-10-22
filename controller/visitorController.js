@@ -61,3 +61,23 @@ exports.deleteVisitor = async (req, res) => {
         res.status(500).json({ message: 'Error deleting visitor', error });
     }
 };
+exports.UpdateVisitor = async (req, res) => {
+    try {
+        const { companyName, mobileNo, visitToPerson, reason, inTime, outTime, remarks } = req.body;
+
+        const updateVisitor = await Visitor.findByIdAndUpdate(
+            req.params.id,
+            { companyName, mobileNo, visitToPerson, reason, inTime, outTime, remarks },
+            { new: true }
+        );
+
+        if (!updateVisitor) {
+            return res.status(404).json({ message: 'Visitor not found' });
+        }
+
+        res.status(200).json(updateVisitor); // Return updated visitor as response
+    } catch (err) {
+        res.status(500).json({ message: 'Server Error', err });
+    }
+};
+

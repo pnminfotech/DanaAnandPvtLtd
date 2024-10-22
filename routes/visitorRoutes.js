@@ -11,8 +11,8 @@ router.get('/all', visitorController.getVisitors);
 
 // Get a visitor by ID
 router.get('/:id', visitorController.getVisitorById);
-
+router.put('/update/:id', visitorController.UpdateVisitor);
 // Delete a visitor by ID
-router.delete('/:id', visitorController.deleteVisitor);
+router.delete('/delete/:id', visitorController.deleteVisitor);
 
 module.exports = router;
