@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const courierRoutes = require('./routes/courierRoutes'); 
 const keyRecordRoutes = require('./routes/keyRecordRoutes');
+const ElectricityReading =require('./routes/electricityReadingRoutes')
 const waterReadingRoutes = require('./routes/waterReadingRoutes');
 const vendorRoutes = require('./routes/vendorRoutes')
 const visitorRoutes = require('./routes/visitorRoutes')
@@ -26,6 +27,7 @@ app.use(bodyParser.json()); // Parse incoming JSON requests
 connectToMongoDB();
 // Routes
 app.use('/api/key-record', keyRecordRoutes);
+app.use('/api/electricity', ElectricityReading);
 app.use('/api/water-reading', waterReadingRoutes);
 app.use('/api/courier', courierRoutes);
 app.use('/api/vendors',vendorRoutes)
