@@ -17,7 +17,7 @@ const waterReadingSchema = new mongoose.Schema({
     waterType: {type: String,required: true,
         enum: ['Water Coolant', 'RO Water'], // You can add more types here if needed
     },
-}, { timestamps: true }); // timestamps will automatically add createdAt and updatedAt fields
+}); // timestamps will automatically add createdAt and updatedAt fields
 
 // Create and export the WaterReading model
 module.exports = mongoose.model('WaterReading', waterReadingSchema);

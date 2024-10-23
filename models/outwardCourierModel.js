@@ -9,6 +9,6 @@ const OutwardCourierSchema = new mongoose.Schema({
     from: { type: String, required: true },
     to: { type: String, required: true },
     receivedBy: { type: String, required: true }
-}, { timestamps: true });
+});
 
 module.exports = mongoose.model('OutwardCourier', OutwardCourierSchema);

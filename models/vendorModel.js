@@ -24,7 +24,7 @@ const vendorSchema = new mongoose.Schema({
     remarks: {
         type: String
     }
-}, { timestamps: true });
+});
 
 
 

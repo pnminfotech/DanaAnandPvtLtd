@@ -11,6 +11,6 @@ const CourierSchema = new mongoose.Schema({
     from: { type: String, required: true },  // Courier From
     to: { type: String, required: true },  // Courier To
     receivedBy: { type: String, required: true }  // Received by
-}, { timestamps: true });
+});
 
 module.exports = mongoose.model('Courier', CourierSchema);

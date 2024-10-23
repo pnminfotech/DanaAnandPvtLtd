@@ -10,6 +10,6 @@ const electricityReadingSchema = new Schema({
     endReading: { type: Number, required: true },
     total: { type: Number, required: true },
     name: { type: String, required: true },
-}, { timestamps: true });
+});
 
 module.exports = mongoose.model('ElectricityReading', electricityReadingSchema);
