@@ -1,9 +1,9 @@
 const HubTransportation = require('../models/HubTransportation');
 
 exports.submitHub = async (req, res) => {
-    const { route, vehicleNumber, numberOfEmployees } = req.body;
+    const { route, vehicleNumber, numberOfEmployees, date } = req.body;
 
-    if (!route || !vehicleNumber || !numberOfEmployees) {
+    if (!route || !vehicleNumber || !numberOfEmployees || !date) {
         return res.status(400).json({ error: 'All fields are required' });
     }
 
@@ -12,7 +12,8 @@ exports.submitHub = async (req, res) => {
         const newEntry = new HubTransportation({
             route,
             vehicleNumber,
-            numberOfEmployees
+            numberOfEmployees,
+            date,
         });
 
         // Save the entry to the database
@@ -40,12 +41,12 @@ exports.getAllHubTransportations = async (req, res) => {
 // Update an entry
 exports.updateHubTransportation = async (req, res) => {
     const { id } = req.params;
-    const { route, vehicleNumber, numberOfEmployees } = req.body;
+    const { route, vehicleNumber, numberOfEmployees,  date } = req.body;
 
     try {
         const updatedEntry = await HubTransportation.findByIdAndUpdate(
             id,
-            { route, vehicleNumber, numberOfEmployees },
+            { route, vehicleNumber, numberOfEmployees,    date },
             { new: true }
         );
 
