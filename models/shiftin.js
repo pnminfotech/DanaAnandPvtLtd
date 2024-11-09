@@ -17,7 +17,7 @@ const ShiftInSchema = new  mongoose.Schema({
     numberOfEmployees:{
         type:String,
         required:true
-    }
+    }, date: {type: Date }
 });
 
 module.exports = mongoose.model('ShiftIn',ShiftInSchema);

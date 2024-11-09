@@ -2,8 +2,8 @@ const ShiftIn = require('../models/shiftin');
 
 exports.submitShift = async (req , res) =>{
     try{
-         const {shift ,busRoute ,kilometerDetails,numberOfEmployees} = req.body;
-         if (!shift || !busRoute || !kilometerDetails || !numberOfEmployees) {
+         const {shift ,busRoute ,kilometerDetails,numberOfEmployees, date} = req.body;
+         if (!shift || !busRoute || !kilometerDetails || !numberOfEmployees || !date) {
             return res.status(400).json({message :"All fields are required"});
          }
 
@@ -11,7 +11,8 @@ exports.submitShift = async (req , res) =>{
             shift,
             busRoute,
             kilometerDetails,
-            numberOfEmployees
+            numberOfEmployees,
+            date
          });
 
          await newShiftIn.save();
@@ -34,12 +35,12 @@ exports.getallshits = async (req, res) =>{
 
 exports.updateShift = async (req, res) => {
     const { id } = req.params;
-    const { shift, busRoute, kilometerDetails, numberOfEmployees } = req.body;
+    const { shift, busRoute, kilometerDetails, numberOfEmployees,date } = req.body;
 
     try {
         const updatedShift = await ShiftIn.findByIdAndUpdate(
             id,
-            { shift, busRoute, kilometerDetails, numberOfEmployees },
+            { shift, busRoute, kilometerDetails, numberOfEmployees, date },
             { new: true, runValidators: true }
         );
 

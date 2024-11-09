@@ -2,10 +2,10 @@ const ShiftOut = require('../models/ShiftOut');
 
 // POST - Create a Shift Out record
 exports.createShiftOut = async (req, res) => {
-    const { shift, busRoute, kilometerDetails, numberOfEmployees } = req.body;
+    const { shift, busRoute, kilometerDetails, numberOfEmployees, date } = req.body;
 
     // Validate input
-    if (!shift || !busRoute || !kilometerDetails || !numberOfEmployees) {
+    if (!shift || !busRoute || !kilometerDetails || !numberOfEmployees || !date) {
         return res.status(400).json({ error: 'All fields are required' });
     }
 
@@ -14,7 +14,9 @@ exports.createShiftOut = async (req, res) => {
             shift,
             busRoute,
             kilometerDetails,
-            numberOfEmployees
+            numberOfEmployees,
+            date
+            
         });
 
         await newShiftOut.save();
@@ -37,12 +39,12 @@ exports.getAllShiftOuts = async (req, res) => {
 // PUT - Update a specific Shift Out record
 exports.updateShiftOut = async (req, res) => {
     const { id } = req.params;
-    const { shift, busRoute, kilometerDetails, numberOfEmployees } = req.body;
+    const { shift, busRoute, kilometerDetails, numberOfEmployees ,date} = req.body;
 
     try {
         const updatedShiftOut = await ShiftOut.findByIdAndUpdate(
             id,
-            { shift, busRoute, kilometerDetails, numberOfEmployees },
+            { shift, busRoute, kilometerDetails, numberOfEmployees,date },
             { new: true, runValidators: true }
         );
 
