@@ -1,7 +1,8 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-
 const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 const courierRoutes = require('./routes/courierRoutes'); 
 const keyRecordRoutes = require('./routes/keyRecordRoutes');
 const ElectricityReading =require('./routes/electricityReadingRoutes')
@@ -11,6 +12,7 @@ const visitorRoutes = require('./routes/visitorRoutes')
 const ShiftIn = require('./routes/shiftInRoutes');
 const ShiftOut = require('./routes/shiftOut');
 const HubTransportation = require('./routes/HubTransportation')
+const userRoute = require('./routes/userRoute')
 const { connectToMongoDB } = require("./config/connection");
 
 const app = express();
@@ -26,6 +28,7 @@ app.use(bodyParser.json()); // Parse incoming JSON requests
 // MongoDB Connection
 connectToMongoDB();
 // Routes
+app.use('/api/user', userRoute);
 app.use('/api/key-record', keyRecordRoutes);
 app.use('/api/electricity', ElectricityReading);
 app.use('/api/water-reading', waterReadingRoutes);
