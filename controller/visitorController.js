@@ -2,12 +2,13 @@ const Visitor = require('../models/Visitor');
 
 // Create a new visitor
 exports.createVisitor = async (req, res) => {
-    const {companyName,mobileNo, visitToPerson, reason, inTime, outTime ,remarks} = req.body;
-    if (!companyName || !mobileNo || !visitToPerson || !inTime || !outTime) {
+    const { date, companyName,mobileNo, visitToPerson, reason, inTime, outTime ,remarks} = req.body;
+    if ( !date|| !companyName || !mobileNo || !visitToPerson || !inTime || !outTime) {
         return res.status(400).json({ error: 'All fields are required' });
     }
     try {
         const visitor = new Visitor({
+            date,
             companyName,
             mobileNo,
             visitToPerson,
@@ -63,11 +64,11 @@ exports.deleteVisitor = async (req, res) => {
 };
 exports.UpdateVisitor = async (req, res) => {
     try {
-        const { companyName, mobileNo, visitToPerson, reason, inTime, outTime, remarks } = req.body;
+        const { date, companyName, mobileNo, visitToPerson, reason, inTime, outTime, remarks } = req.body;
 
         const updateVisitor = await Visitor.findByIdAndUpdate(
             req.params.id,
-            { companyName, mobileNo, visitToPerson, reason, inTime, outTime, remarks },
+            {  date,companyName, mobileNo, visitToPerson, reason, inTime, outTime, remarks },
             { new: true }
         );
 

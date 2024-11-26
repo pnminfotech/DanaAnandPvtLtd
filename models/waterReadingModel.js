@@ -1,4 +1,3 @@
-
 const mongoose = require('mongoose');
 // Define the schema for Water Reading
 const waterReadingSchema = new mongoose.Schema({

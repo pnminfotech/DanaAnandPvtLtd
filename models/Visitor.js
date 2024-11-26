@@ -1,6 +1,10 @@
 const mongoose = require('mongoose');
 
 const visitorSchema = new mongoose.Schema({
+    date: {
+        type: Date,
+        required: true
+    },
     companyName: {
         type: String,
         required: true
